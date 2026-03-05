@@ -50,12 +50,12 @@ def getShopListByDishes(dishes: list, personCount: int):
 inputFiles = ["1.txt", "2.txt", "3.txt"]
 outputFile = "result.txt"
 
-def getCountLinesByFile(filename: str):
-    with open(filename, "r", encoding='utf-8') as f:
+def getCountLinesByFile(fileName: str):
+    with open(fileName, "r", encoding='utf-8') as f:
         return len(f.readlines())
-def readFile (filename: str):
-    with open(filename, "r", encoding='utf-8') as f:
-        return f.read()
+def readFile (fileName: str):
+    with open(fileName, "r", encoding='utf-8') as f:
+        return f.readlines()
 def creationFile(filesList: list, createFile: str):
     countLineInFiles = []
     for file in filesList:
@@ -66,7 +66,10 @@ def creationFile(filesList: list, createFile: str):
         for countLine, fileName in countLineInFiles:
             f.write(f"{fileName}\n")
             f.write(f"{countLine}\n")
-            for line in readFile(fileName):
+            lines = readFile(fileName)
+            for line in lines:
                 f.write(line)
+            if lines and not lines[-1].endswith('\n'):
+                f.write('\n')
 
 creationFile(inputFiles, outputFile)
