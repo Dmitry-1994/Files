@@ -1,4 +1,6 @@
-def readReciepes(filename):
+import os
+# Задача 1
+def readReciepes(filename: str):
     cookBook = {}
     with open(filename, "r", encoding='utf-8') as f:
         lines = f.readlines()
@@ -27,8 +29,10 @@ def parseIngridients(stringIngredient: str):
         'measure': ingredientMeasure
     }
 
+# Задача 2
+file = "recipes.txt" # Исходные данные для задачи
 def getShopListByDishes(dishes: list, personCount: int):
-    cookBook = readReciepes("recipes.txt")
+    cookBook = readReciepes(file)
     shopList = {}
     for dish in dishes:
         for ingredient in cookBook[dish]:
@@ -41,5 +45,28 @@ def getShopListByDishes(dishes: list, personCount: int):
                 shopList[name] = {'measure': measure, 'quantity': quantity}
     return shopList
 
-print(getShopListByDishes(['Запеченный картофель', 'Омлет'], 2))
+# Задача 3
+# Исходные данные для задачи
+inputFiles = ["1.txt", "2.txt", "3.txt"]
+outputFile = "result.txt"
 
+def getCountLinesByFile(filename: str):
+    with open(filename, "r", encoding='utf-8') as f:
+        return len(f.readlines())
+def readFile (filename: str):
+    with open(filename, "r", encoding='utf-8') as f:
+        return f.read()
+def creationFile(filesList: list, createFile: str):
+    countLineInFiles = []
+    for file in filesList:
+        countLine = getCountLinesByFile(file)
+        countLineInFiles.append((countLine, file))
+    countLineInFiles.sort()
+    with open(createFile, "w", encoding='utf-8') as f:
+        for countLine, fileName in countLineInFiles:
+            f.write(f"{fileName}\n")
+            f.write(f"{countLine}\n")
+            for line in readFile(fileName):
+                f.write(line)
+
+creationFile(inputFiles, outputFile)
